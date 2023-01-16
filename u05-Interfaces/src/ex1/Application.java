@@ -4,8 +4,7 @@ import static java.lang.System.out;
 
 public class Application {
     public static void main(String[] args) {
-        Array<String> array = new Array<>();
-        //Array<String> array = new Array<>(oldSize -> 2 * oldSize);
+        DynamicArray<String> array = new DynamicArray<>(String.class, 2);
         array.add("one");
         array.add("two");
         array.add("three");

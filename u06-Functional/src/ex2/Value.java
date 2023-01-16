@@ -3,6 +3,7 @@ package ex2;
 import java.util.function.DoubleBinaryOperator;
 
 public abstract class Value {
+
     static private class SimpleValue extends Value {
         final double value;
 

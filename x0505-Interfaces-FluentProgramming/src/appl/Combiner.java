@@ -1,17 +1,18 @@
 package appl;
 
-public class Combiner implements WorkerA {
-    private final WorkerA first;
-    private final WorkerA second;
+public class Combiner implements Worker {
 
-    public Combiner(WorkerA first, WorkerA second) {
+    private final Worker first;
+    private final Worker second;
+
+    public Combiner(Worker first, Worker second) {
         this.first = first;
         this.second = second;
     }
 
     @Override
-    public void work(int value) {
-        this.first.work(value);
-        this.second.work(value);
+    public int work(int value) {
+        int newData = this.first.work(value);
+        return this.second.work(newData);
     }
 }

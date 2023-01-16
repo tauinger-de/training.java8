@@ -1,4 +1,4 @@
-package ex2;
+package ex1;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;

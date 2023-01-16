@@ -3,14 +3,15 @@ package ex2;
 import java.io.StringReader;
 
 public class Application {
-    static class PrintProcessor extends Processor {
+
+    static class PrintingProcessor extends Processor {
         @Override
         protected void process(char ch) {
-            System.out.print(ch);
+            System.out.print(ch + " ");
         }
     }
 
-    static class CharCountProcessor extends Processor {
+    static class CountingProcessor extends Processor {
         private int count = 0;
 
         @Override
@@ -30,12 +31,14 @@ public class Application {
     }
 
     public static void main(String[] args) {
-        PrintProcessor p1 = new PrintProcessor();
-        p1.run(new StringReader("hello"));
+        String input = "Reliefpfeiler";
+
+        PrintingProcessor p1 = new PrintingProcessor();
+        p1.run(new StringReader(input));
+
         System.out.println();
 
-        CharCountProcessor p2 = new CharCountProcessor();
-        p2.run(new StringReader("world"));
-        System.out.println();
+        CountingProcessor p2 = new CountingProcessor();
+        p2.run(new StringReader(input));
     }
 }

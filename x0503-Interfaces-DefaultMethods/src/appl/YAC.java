@@ -1,19 +1,21 @@
 package appl;
 
-public interface YAC<T> {  // Yet another Comparator...
-    public abstract boolean eq(T v0, T v1);
+// Yet Another Comparator...
+public interface YAC<T> {
 
-    public abstract boolean gt(T v0, T v1);
+    boolean isEqual(T v0, T v1);
 
-    public default boolean ge(T v0, T v1) {
-        return this.gt(v0, v1) || this.eq(v0, v1);
+    boolean isGreaterThan(T v0, T v1);
+
+    default boolean isLessThan(T v0, T v1) {
+        return !this.isGreaterOrEqual(v0, v1);
     }
 
-    public default boolean lt(T v0, T v1) {
-        return !this.ge(v0, v1);
+    default boolean isGreaterOrEqual(T v0, T v1) {
+        return this.isGreaterThan(v0, v1) || this.isEqual(v0, v1);
     }
 
-    public default boolean le(T v0, T v1) {
-        return this.eq(v0, v1) || this.lt(v0, v1);
+    default boolean isLessThanOrEqual(T v0, T v1) {
+        return this.isEqual(v0, v1) || this.isLessThan(v0, v1);
     }
 }
