@@ -1,4 +1,4 @@
-package li;
+package l;
 
 import static java.lang.System.out;
 

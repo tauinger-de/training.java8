@@ -16,4 +16,3 @@ definierbare Strategie. Dafür soll das vorgegebene Interface `Reallocator` genu
 2. Implementieren und nutzen Sie eine neue Reallokations-Strategie
 3. Ersetzten Sie dann das `Reallocator` Interface durch das Standard-Interface `IntFunction`
 
-## ex3

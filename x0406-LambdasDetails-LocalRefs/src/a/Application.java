@@ -1,4 +1,4 @@
-package ai;
+package a;
 
 import static java.lang.System.out;
 
@@ -18,8 +18,6 @@ public class Application {
 	void demo() throws Exception {
 		int foo = 42;
 		final int bar = 77;
-//		Integer foo = 42;
-//		final Integer bar = 77;
 		final Runnable r = new Runnable() {
 			public void run() {
 				out.println(Application.this.hello + " " + foo + " " + bar);

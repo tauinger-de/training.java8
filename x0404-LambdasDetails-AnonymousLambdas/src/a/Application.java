@@ -1,4 +1,4 @@
-package ai;
+package a;
 
 import static java.lang.System.out;
 

@@ -40,10 +40,6 @@ public class Application {
 		System.out.println(foo.f(20, 42));
 	}
 	
-//	static void hello(Bar bar) {
-//		System.out.println(bar.b(20, 42));
-//	}
-
 	static Foo world() {
 		return (x, y) -> x * y;
 	}

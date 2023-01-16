@@ -12,6 +12,9 @@ public class Application {
 	
 	public static void main(String[] args) throws Exception {
 		Features.print(Application.class);
+
+		// final Runnable r = () -> out.println("Hello " + instanceVar);	// GEHT NICHT
+
 		Application appl = new Application();
 		appl.demo();
 	}

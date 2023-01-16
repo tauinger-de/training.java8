@@ -1,76 +1,45 @@
 package appl;
 
-
+@SuppressWarnings({"unused", "Convert2MethodRef"})
 public class Application {
-	
-	
-	public static void main(String[] args) {
-		{
-			Runnable r = () -> Foo.f();
-			r.run();
-		}
-		{
-			Runnable r = Foo::f;
-			r.run();
-		}
-		// ------------------------------------------
-		{
-			Foo foo = new Foo();
-			Runnable r = () -> foo.r();
-			r.run();
-		}
-		{
-			Foo foo = new Foo();
-			Runnable r = foo::r;
-			r.run();
-		}
-		// ------------------------------------------
-		// ------------------------------------------
-		{
-			Mapper m = v -> Foo.g(v);
-			int result = m.map(21);
-			System.out.println(result);
-		}
-		{
-			NumberMapper m = Foo::g;
-			Number result = m.map(21);
-			System.out.println(result);
-		}
-		{
-			Mapper2 m = Foo::g;
-			int result = m.map(21, 21);
-			System.out.println(result);
-		}
-		// ------------------------------------------
-		{
-			Foo foo = new Foo();
-			Mapper m = v -> foo.s(v);
-			int result = m.map(21);
-			System.out.println(result);
-		}
-		{
-			Foo foo = new Foo();
-			Mapper m = foo::s;
-			int result = m.map(21);
-			System.out.println(result);
-		}
-		// ------------------------------------------
-		{
-			Action<String> c = v -> System.out.println(v);
-			c.execute("Hello");
-		}
-		{
-			Action<String> c = System.out::println;
-			c.execute("Hello");
-		}
-		// ------------------------------------------
-		{
-			Action<Integer> a = v -> new Bar(v);
-			a.execute(42);
-		}
-		{
-			Action<Integer> a = Bar::new;
-			a.execute(42);
-		}
-	}
+
+    /**
+     * Demonstriert Nutzung einer statischen Methode als Referenz
+     */
+    static void demoRunnable_staticMethod() {
+        // hier rufen wir einfach nur eine andere Methode auf
+        Runnable runnable1 = () -> Foo.doSomething();
+
+        // dafür können wir auch eine Methoden-Referenz nehmen
+        Runnable runnable2 = Foo::doSomething;
+    }
+
+    /**
+     * Demonstriert Nutzung einer Instanz-Methode als Referenz
+     */
+    static void demoRunnable_instanceMethod() {
+        Bar bar = new Bar(42);
+
+        // hier rufen wir einfach nur eine andere Methode auf
+        Runnable runnable1 = () -> bar.dumpValue();
+
+        // dafür können wir auch eine Methoden-Referenz nehmen
+        Runnable runnable2 = bar::dumpValue;
+    }
+
+    static void demoConstructorReference() {
+        // klassisch
+        Action<Integer> instantiateBarAction1 = v -> new Bar(v);
+
+        // mit Constructor-Ref
+        Action<Integer> instantiateBarAction2 = Bar::new;
+        instantiateBarAction2.execute(1);
+    }
+
+
+    public static void main(String[] args) {
+        demoRunnable_staticMethod();
+        demoRunnable_instanceMethod();
+        demoConstructorReference();
+    }
 }
