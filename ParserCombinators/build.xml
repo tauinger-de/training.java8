@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<project default="run">
+
+	<property name="dependencies" value="${basedir}/../dependencies" />
+	
+	<property name="src.dir" value="${basedir}/src" />
+	<property name="build.dir" value="${basedir}/build" />
+
+	<basename property="application" file="${basedir}" />
+
+	<path id="project.classpath">
+		
+		<pathelement location="${build.dir}" />
+		<pathelement location="${basedir}/../shared/bin" />
+		<pathelement location="${basedir}/../db-util/db-util.jar" />
+		<pathelement location="C:/nowak/programme/eclipse-java-luna-SR1-win32/plugins/org.junit_4.11.0.v201303080030/junit.jar" />
+	</path>
+
+	<target name="compile" description="">
+		<delete dir="${build.dir}" />
+		<mkdir dir="${build.dir}" />
+		<javac srcdir="${src.dir}" destdir="${build.dir}" debug="true" fork="false">
+			<classpath refid="project.classpath" />
+			<!-- <compilerarg value="-deprecation"/> -->
+			<compilerarg value="-nowarn" />
+		</javac>
+	</target>
+
+	<target name="run" depends="compile" description="">
+		<!-- java classname="appl.DemoExpressionToValue" fork="true" classpathref="project.classpath"/ -->
+		<java classname="appl.DemoInterpreter" fork="true" classpathref="project.classpath"/>
+		<delete dir="${build.dir}"/>
+	</target>
+
+</project>
+
+
+
+
+

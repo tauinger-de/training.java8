@@ -1,0 +1,11 @@
+.metadata
+.idea
+.recommenders
+
+**/bin/
+**/.classpath
+**/.project
+**/.settings
+**/*.iml
+
+dependencies/asm-5.0.3
