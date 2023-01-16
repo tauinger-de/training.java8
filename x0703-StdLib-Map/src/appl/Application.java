@@ -32,17 +32,18 @@ public class Application {
             }
         }
         out.println(counts);
+        out.println();
     }
 
     static void demoGetOrDefault() {
         mlog();
         Map<String, Integer> counts = new HashMap<>();
         for (String word : words) {
-            // Integer count = counts.getOrDefault(word, 0);
             int count = counts.getOrDefault(word, 0);
             counts.put(word, count + 1);
         }
         out.println(counts);
+        out.println();
     }
 
     static void demoPutIfAbsentAndReplace() {
@@ -54,15 +55,17 @@ public class Application {
             counts.replace(word, count + 1);
         }
         out.println(counts);
+        out.println();
     }
 
     static void demoCompute() {
         mlog();
         Map<String, Integer> counts = new HashMap<>();
         for (String word : words) {
-            counts.computeIfAbsent(word, (String k) -> 0);
+            counts.computeIfAbsent(word, k -> 0);
             counts.computeIfPresent(word, (String k, Integer v) -> v + 1);
         }
         out.println(counts);
+        out.println();
     }
 }

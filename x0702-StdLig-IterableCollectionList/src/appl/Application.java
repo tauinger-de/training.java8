@@ -17,33 +17,38 @@ public class Application {
     static void demoForEach() {
         mlog();
         Iterable<Integer> list = Arrays.asList(20, 40, 10, 30);
+
+        // foreach mit Methoden-Ref
         list.forEach(out::println);
+        out.println();
+
+        // foreach mit Lambda
+        list.forEach(n -> out.printf("Die Zahl ist %d\n", n));
         out.println();
     }
 
     static void demoRemoveIf() {
         mlog();
-        // Collection<Integer> list = Arrays.asList(20, 40, 10, 30);
         Collection<Integer> list = new ArrayList<>(Arrays.asList(20, 40, 10, 30));
         list.removeIf(elem -> elem >= 30);
-        list.forEach(s -> out.print(s + " "));
+        out.println(list);
         out.println();
     }
 
     static void demoSort() {
         mlog();
         List<Integer> list = Arrays.asList(20, 40, 10, 30);
-        // list.sort((i0, i1) -> i0.compareTo(i1)); // List
-        list.sort(Comparator.naturalOrder()); // List
-        list.forEach(s -> out.print(s + " "));
+        // list.sort((i0, i1) -> i0.compareTo(i1));
+        list.sort(Comparator.naturalOrder());
+        out.println(list);
         out.println();
     }
 
     static void demoReplaceAll() {
         mlog();
         List<Integer> list = Arrays.asList(20, 40, 10, 30);
-        list.replaceAll(elem -> 2 * elem); // List
-        list.forEach(s -> out.print(s + " "));
+        list.replaceAll(elem -> 2 * elem);
+        out.println(list);
         out.println();
     }
 }
