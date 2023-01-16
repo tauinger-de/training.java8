@@ -1,13 +1,10 @@
 package appl;
 
-import static java.lang.System.out;
-
-
 public class Application {
-	public static void main(String[] args) {
-		Foo foo = new FooImpl();
+    public static void main(String[] args) {
+        Foo foo = new FooImpl();
 //		foo.f();
-		foo.g();
+        foo.g();
 
 //		YAC<Integer> yac = new YAC<Integer>() {
 //			public boolean eq(Integer v0, Integer v1) {
@@ -24,5 +21,5 @@ public class Application {
 //		out.println(yac.lt(1, 2));
 //		out.println(yac.le(1, 2));
 //		out.println(yac.le(1, 1));
-	}		
+    }
 }

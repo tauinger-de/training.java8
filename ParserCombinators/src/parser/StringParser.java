@@ -4,25 +4,26 @@ import scanner.Scanner;
 import scanner.Symbol;
 
 public class StringParser extends Parser<String> {
-	public static final StringParser string = new StringParser();
-	private StringParser() {
-	}
+    public static final StringParser string = new StringParser();
 
-	@Override
-	protected Parser<?>[] getParsers() {
-		return new Parser<?>[] { };
-	}
+    private StringParser() {
+    }
 
-	@Override
-	protected boolean canParse(Symbol symbol) {
-		return symbol != null && symbol.isLiteral() && symbol.asLiteral().isString();
-	}
+    @Override
+    protected Parser<?>[] getParsers() {
+        return new Parser<?>[]{};
+    }
 
-	@Override
-	protected String doParse(Scanner scanner) {
-		final String result = scanner.current().asLiteral().stringValue();
-		scanner.next();
-		return result;
-	}
+    @Override
+    protected boolean canParse(Symbol symbol) {
+        return symbol != null && symbol.isLiteral() && symbol.asLiteral().isString();
+    }
+
+    @Override
+    protected String doParse(Scanner scanner) {
+        final String result = scanner.current().asLiteral().stringValue();
+        scanner.next();
+        return result;
+    }
 }
 

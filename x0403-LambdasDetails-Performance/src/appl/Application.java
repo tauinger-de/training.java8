@@ -1,8 +1,8 @@
 package appl;
 
-import static java.lang.System.out;
-
 import util.PerformanceRunner;
+
+import static java.lang.System.out;
 
 // try JVM-Arg -server!
 

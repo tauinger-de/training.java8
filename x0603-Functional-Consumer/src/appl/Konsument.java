@@ -13,8 +13,12 @@ package appl;
 //	}
 //}
 interface Konsument {
-	public abstract void accept(int v);
-	public default Konsument andThen(Konsument after) {
-		return v -> { this.accept(v); after.accept(v); };
-	}
+    public abstract void accept(int v);
+
+    public default Konsument andThen(Konsument after) {
+        return v -> {
+            this.accept(v);
+            after.accept(v);
+        };
+    }
 }

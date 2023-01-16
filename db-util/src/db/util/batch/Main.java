@@ -4,17 +4,17 @@ import db.util.logger.Logger;
 import db.util.logger.PrintStreamLogger;
 
 public class Main {
-	
-	public static void main(String[] args) {
 
-		if (args.length < 2) 
-			throw new RuntimeException("illegal arguments for main-Method");
+    public static void main(String[] args) {
 
-		String propertiesFilename = args[0];
-		String actionName = args[1];
-		String commandsFilename = args.length > 2 ? args[2] : null;
-		Logger logger = new PrintStreamLogger();
+        if (args.length < 2)
+            throw new RuntimeException("illegal arguments for main-Method");
 
-		Executor.execute(propertiesFilename, actionName, commandsFilename, logger);
-	}
+        String propertiesFilename = args[0];
+        String actionName = args[1];
+        String commandsFilename = args.length > 2 ? args[2] : null;
+        Logger logger = new PrintStreamLogger();
+
+        Executor.execute(propertiesFilename, actionName, commandsFilename, logger);
+    }
 }
