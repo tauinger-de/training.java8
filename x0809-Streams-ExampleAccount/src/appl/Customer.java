@@ -1,7 +1,8 @@
 package appl;
 
 public class Customer {
-    private String name;
+
+    private final String name;
 
     public Customer(String name) {
         this.name = name;
@@ -9,10 +10,6 @@ public class Customer {
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @Override

@@ -28,8 +28,7 @@ public class Application {
 
     static void demoStreamBuilder() {
         mlog();
-        Stream.Builder<Integer> builder = Stream.builder();
-        builder
+        Stream.builder()
                 .add(42)
                 .add(77)
                 .build()
@@ -41,7 +40,7 @@ public class Application {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(filename));
             reader.lines()
-                    .map(line -> line.trim())
+                    .map(String::trim)
                     .filter(line -> line.startsWith("hello"))
                     .forEach(System.out::println);
         } catch (IOException e) {
@@ -54,7 +53,7 @@ public class Application {
         final Path path = FileSystems.getDefault().getPath(filename);
         try {
             Files.lines(path)
-                    .map(line -> line.trim())
+                    .map(String::trim)
                     .filter(line -> line.startsWith("Hallo"))
                     .forEach(System.out::println);
         } catch (IOException e) {
@@ -69,9 +68,8 @@ public class Application {
             Reader reader = new InputStreamReader(in);
             final ReaderBasedIterator iterator = new ReaderBasedIterator(reader);
             final Spliterator<Character> spliterator = Spliterators.spliteratorUnknownSize(iterator, 0);
-            final Stream<Character> stream = StreamSupport.stream(spliterator, false);
-            stream
-                    .map(c -> Character.toLowerCase(c))
+            StreamSupport.stream(spliterator, false)
+                    .map(Character::toLowerCase)
                     .forEach(System.out::print);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -87,7 +85,7 @@ public class Application {
             final Stream<Byte> stream = StreamSupport.stream(spliterator, false);
             stream
                     .map(b -> (char) (byte) b)
-                    .map(c -> Character.toUpperCase(c))
+                    .map(Character::toUpperCase)
                     .forEach(System.out::print);
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -1,15 +1,13 @@
 package appl;
 
-import util.Features;
-
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static util.Util.mlog;
 
+@SuppressWarnings("unused")
 public class Application {
 
     public static void main(String[] args) {
@@ -27,37 +25,38 @@ public class Application {
 //		demoCombination1();		
         demoCombination2();
 //		demoCombination3();
-//		demoInternal();
     }
 
     static void demoMap() {
         mlog();
-        final List<String> list = Arrays.asList("red", "green", "blue");
-        Stream<Integer> stream = list.stream().map(s -> s.length());
-        stream.forEach(x -> System.out.print(x + " "));
+        Arrays.asList("red", "green", "blue")
+                .stream()
+                .map(s -> s.length())
+                .forEach(x -> System.out.print(x + " "));
         System.out.println();
     }
 
     static void demoMapToInt() {
         mlog();
-        final List<String> list = Arrays.asList("red", "green", "blue");
-        IntStream stream = list.stream().mapToInt(s -> s.length());
-        stream.forEach(x -> System.out.print(x + " "));
+        Arrays.asList("red", "green", "blue")
+                .stream().mapToInt(s -> s.length())
+                .forEach(x -> System.out.print(x + " "));
         System.out.println();
     }
 
     static void demoMapToDouble() {
         mlog();
-        final List<String> list = Arrays.asList("red", "green", "blue");
-        DoubleStream stream = list.stream().mapToDouble(s -> s.length() * 0.5);
-        stream.forEach(x -> System.out.print(x + " "));
+        Arrays.asList("red", "green", "blue")
+                .stream()
+                .mapToDouble(s -> s.length() * 0.5)
+                .forEach(x -> System.out.print(x + " "));
         System.out.println();
     }
 
     static void demoFlatMap() {
         mlog();
         final List<String> list1 = Arrays.asList("red", "green", "blue");
-        final List<String> list2 = Arrays.asList("rot", "gruen", "blau");
+        final List<String> list2 = Arrays.asList("rot", "grün", "blau");
         final List<List<String>> list = Arrays.asList(list1, list2);
 
         Stream<String> stream = list.stream().flatMap((List<String> l) -> l.stream());
@@ -162,16 +161,4 @@ public class Application {
         System.out.println();
     }
     //@formatter:on
-
-    static void demoInternal() {
-        mlog();
-        Stream<Integer> stream = Stream.of(33, 55, 44, 11, 22, 66);
-        Features.printInheritance(stream);
-        stream = stream.map(x -> x + 1);
-        Features.printInheritance(stream);
-        stream = stream.filter(x -> x % 2 == 0);
-        Features.printInheritance(stream);
-        stream.forEach(s -> System.out.print(s + " "));
-        System.out.println();
-    }
 }

@@ -18,8 +18,8 @@ public class Application {
 
     static final Customer c1 = new Customer("Nowak");
     static final Customer c2 = new Customer("Rueschenpoehler");
-    static final List<Account> accounts = new ArrayList<>();
 
+    static final List<Account> accounts = new ArrayList<>();
     static {
         accounts.add(new Account(4711, c1, 100));
         accounts.add(new Account(4712, c2, 200));

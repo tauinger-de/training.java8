@@ -1,5 +1,7 @@
 package appl;
 
+import book.Book;
+
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -16,98 +18,87 @@ public class Application {
     public static void main(String[] args) {
         demoCompareToWithIsbn();
         demoComparingWithIsbn();
-        demoCompareToWithPrice();
+        demoComparingWithIsbnMethodReference();
+
+        demoComparatorPrice();
         demoComparingWithPrice();
         demoComparingInt();
-        demoReversed1();
         demoThenComparing1();
         demoThenComparing2();
-        demoThenComparing3();
-        demoThenComparing4();
         demoNaturalOrderReversedOrder();
         demoNullsFirst();
         demoSortNullsFirst();
         demoSortNullsLast();
     }
 
+    @SuppressWarnings("ComparatorCombinators")
     static void demoCompareToWithIsbn() {
         mlog();
         Comparator<Book> c = (b1, b2) -> b1.getIsbn().compareTo(b2.getIsbn());
         out.println(c.compare(book1, book2)); // -> -2
     }
 
+    @SuppressWarnings("Convert2MethodRef")
     static void demoComparingWithIsbn() {
         mlog();
         Comparator<Book> c = Comparator.comparing(b -> b.getIsbn());
         out.println(c.compare(book1, book2)); // -> -2
     }
 
-    static void demoCompareToWithPrice() {
+    static void demoComparingWithIsbnMethodReference() {
+        mlog();
+        Comparator<Book> c = Comparator.comparing(Book::getIsbn);
+        out.println(c.compare(book1, book2)); // -> -2
+    }
+
+    static void demoComparatorPrice() {
         mlog();
         Comparator<Book> c = (b1, b2) ->
+                b1.getPriceInCent() - b2.getPriceInCent();
 //			if (b1.getPrice() > b2.getPrice())
 //				return 1;
 //			if (b1.getPrice() < b2.getPrice())
 //				return -1;
 //			return 0;
-                b1.getPrice() - b2.getPrice();
         out.println(c.compare(book1, book2)); // -> -1
     }
 
     static void demoComparingWithPrice() {
         mlog();
-        Comparator<Book> c = Comparator.comparing(b -> b.getPrice());
+        Comparator<Book> c = Comparator.comparing(Book::getPrice);
         out.println(c.compare(book1, book2)); // -> -1
     }
 
     static void demoComparingInt() {
         mlog();
-        Comparator<Book> c = Comparator.comparingInt(b -> b.getPrice());
+        Comparator<Book> c = Comparator.comparingInt(Book::getPriceInCent);
         out.println(c.compare(book1, book2)); // -> -1
     }
 
-    static void demoReversed1() {
+    static void demoReversed() {
         mlog();
-        Comparator<Book> c = Comparator.comparingInt(b -> b.getPrice());
-        c = c.reversed();
-        out.println(c.compare(book1, book2)); // -> 1
-    }
-
-    static void demoReversed2() {
-        mlog();
-        Comparator<Book> c = Comparator.comparingInt((Book b) -> b.getPrice()).reversed();
+        Comparator<Book> c = Comparator.comparingInt(Book::getPriceInCent).reversed();
         out.println(c.compare(book1, book2)); // -> 1
     }
 
     static void demoThenComparing1() {
         mlog();
-        Comparator<Book> c = Comparator.comparing(b -> b.getTitle());
-        c = c.thenComparingInt(b -> b.getPrice());
+        Comparator<Book> c = Comparator.comparing(Book::getTitle);
+        c = c.thenComparingInt(Book::getPriceInCent);
         out.println(c.compare(book1, book3)); // -> -1
     }
 
     static void demoThenComparing2() {
         mlog();
-        Comparator<Book> c = Comparator.comparing((Book b) -> b.getTitle()).thenComparing(b -> b.getIsbn());
+        Comparator<Book> c = Comparator
+                .comparing(Book::getTitle)
+                .thenComparingInt(Book::getPriceInCent);
         out.println(c.compare(book1, book3)); // -> -4
     }
 
-    static void demoThenComparing3() {
-        mlog();
-        Comparator<Book> c = Comparator.comparing(b -> b.getTitle());
-        c = c.thenComparingInt(b -> b.getPrice());
-        out.println(c.compare(book1, book3)); // -> -1
-    }
-
-    static void demoThenComparing4() {
-        mlog();
-        Comparator<Book> c1 = (b1, b2) -> b1.getTitle().compareTo(b2.getTitle());
-        Comparator<Book> c2 = (b1, b2) -> b1.getIsbn().compareTo(b2.getIsbn());
-        Comparator<Book> c = c1.thenComparing(c2);
-        out.println(c1.compare(book2, book3));
-        out.println(c.compare(book2, book3));
-    }
-
+    /**
+     * Natural order bedeutet Aufruf von {@link Comparable#compareTo(Object)}
+     */
     static void demoNaturalOrderReversedOrder() {
         mlog();
         Comparator<Integer> c1 = Comparator.naturalOrder();
@@ -130,9 +121,7 @@ public class Application {
         List<Integer> list = Arrays.asList(10, null, 30, null, 20);
         Comparator<Integer> c = Comparator.nullsFirst(Comparator.naturalOrder());
         list.sort(c);
-        for (Integer v : list)
-            out.print(v + " ");
-        out.println();
+        out.println(list);
     }
 
     static void demoSortNullsLast() {
@@ -140,9 +129,7 @@ public class Application {
         List<Integer> list = Arrays.asList(10, null, 30, null, 20);
         Comparator<Integer> c = Comparator.nullsLast(Comparator.reverseOrder());
         list.sort(c);
-        for (Integer v : list)
-            out.print(v + " ");
-        out.println();
+        out.println(list);
     }
 
 }

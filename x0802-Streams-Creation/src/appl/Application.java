@@ -23,6 +23,7 @@ public class Application {
         demoIntStreamRange();
         demoIntStreamIterate();
         demoStreamIterate();
+        demoStreamEmpty();
         demoPerformanceStream();
         demoPerformanceIntStream();
     }
@@ -118,12 +119,15 @@ public class Application {
 
     // VM-arg: -Server
 
+    /**
+     * nutzt java.lang.Integer als Werttyp
+     */
     static void demoPerformanceStream() {
         mlog();
         final PerformanceRunner runner = new PerformanceRunner();
         final Integer[] array = new Integer[size];
-        for (int i = 0; i < size; i++)
-            array[i] = i;
+        Arrays.setAll(array, i -> i);
+
         final IntHolder h = new IntHolder();
         runner.run("Integer", loops, () -> {
             final Stream<Integer> stream = Arrays.stream(array);
@@ -132,12 +136,15 @@ public class Application {
         System.out.println(h.value);
     }
 
+    /**
+     * nutzt int als Werttyp
+     */
     static void demoPerformanceIntStream() {
         mlog();
         final PerformanceRunner runner = new PerformanceRunner();
         final int[] array = new int[size];
-        for (int i = 0; i < size; i++)
-            array[i] = i;
+        Arrays.setAll(array, i -> i);
+
         final IntHolder h = new IntHolder();
         runner.run("int", loops, () -> {
             final IntStream stream = Arrays.stream(array);

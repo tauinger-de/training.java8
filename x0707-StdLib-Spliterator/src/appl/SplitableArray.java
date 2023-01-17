@@ -1,17 +1,15 @@
 package appl;
 
+import java.util.Arrays;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 
-@SuppressWarnings("unchecked")
-class Array<T> {
+class SplitableArray<T> {
+
     private final T[] elements;
 
-    public Array(T[] elements) {
-        final int n = elements.length;
-        this.elements = (T[]) new Object[n];
-        for (int i = 0; i < n; i++)
-            this.elements[i] = elements[i];
+    public SplitableArray(T[] elements) {
+        this.elements = Arrays.copyOf(elements, elements.length); // independent copy
     }
 
     public Spliterator<T> spliterator() {
@@ -19,9 +17,10 @@ class Array<T> {
     }
 
     static class ArraySpliterator<T> implements Spliterator<T> {
+
         private final T[] array;
-        private int origin;
-        private final int fence; // max-index + 1
+        private int origin; // the inclusive start index
+        private final int fence; // the exclusive end index
 
         ArraySpliterator(T[] array, int origin, int fence) {
             this.array = array;
@@ -37,9 +36,10 @@ class Array<T> {
 //		}
 
         public boolean tryAdvance(Consumer<? super T> action) {
-            if (this.origin >= this.fence)
+            if (this.origin >= this.fence) {
                 return false;
-            action.accept((T) this.array[this.origin]);
+            }
+            action.accept(this.array[this.origin]);
             this.origin++;
             return true;
         }
@@ -47,8 +47,9 @@ class Array<T> {
         public Spliterator<T> trySplit() {
             int start = this.origin;
             int middle = (start + this.fence) / 2;
-            if (start >= middle)
+            if (start >= middle) {
                 return null;
+            }
             this.origin = middle;
             return new ArraySpliterator<>(this.array, start, middle);
         }

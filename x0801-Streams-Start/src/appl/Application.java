@@ -20,10 +20,14 @@ public class Application {
         demoTrace();
     }
 
-    static Stream<Integer> createStream() {
+    /**
+     * Hilfsmethode zur Erzeugung eines Streams
+     */
+    private static Stream<Integer> createStream() {
         final Collection<Integer> list = new ArrayList<>();
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 10; i++) {
             list.add(i);
+        }
         return list.stream();
     }
 
@@ -36,9 +40,8 @@ public class Application {
 
     static void demoFilter() {
         mlog();
-        Stream<Integer> stream = createStream();
-        stream
-                .filter((x) -> x > 5)
+        createStream()
+                .filter(x -> x > 5)
                 .filter(x -> x % 2 == 0)
                 .forEach(x -> System.out.print(x + " "));
         System.out.println();
@@ -46,8 +49,7 @@ public class Application {
 
     static void demoMap() {
         mlog();
-        Stream<Integer> stream = createStream();
-        stream
+        createStream()
                 .map(x -> x * 2)
                 .map(x -> x + 1)
                 .forEach(x -> System.out.print(x + " "));
@@ -56,14 +58,17 @@ public class Application {
 
     static void demoMapFilter() {
         mlog();
-        Stream<Integer> stream = createStream();
-        stream
+        createStream()
                 .map(x -> x * 3)
                 .filter(x -> x % 2 == 0)
                 .forEach(x -> System.out.print(x + " "));
         System.out.println();
     }
 
+    /**
+     * Zeigt, dass ein Stream nach Aufruf einer terminalen Operation nicht mehr verwendet werden kann.
+     */
+    @SuppressWarnings("DataFlowIssue")
     static void demoException() {
         mlog();
         Stream<Integer> stream = createStream();
@@ -81,10 +86,9 @@ public class Application {
         Work.useViewer();
         Work.viewer.start();
 
-        Stream<Integer> stream = createStream();
-        stream
-                // .parallel()
-                .peek(traceConsumer("peek", 600, x -> System.out.println(x)))
+        createStream()
+                //  .parallel()
+                .peek(traceConsumer("peek", 600, System.out::println))
                 .map(traceFunction("map", 600, x -> x * 3))
                 .filter(tracePredicate("filter", 600, x -> x % 2 == 0))
                 .forEach(traceConsumer("forEach", 600, x -> System.out.print(x + " ")));
