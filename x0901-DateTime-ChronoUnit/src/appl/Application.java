@@ -14,10 +14,12 @@ public class Application {
     static void demoChronoUnit() {
         mlog();
         for (ChronoUnit u : ChronoUnit.values()) {
-            out.println(u);
+            out.printf("- %s (%d Sekunden)\n", u.name(), u.getDuration().get(ChronoUnit.SECONDS));
         }
-        out.println(ChronoUnit.SECONDS.compareTo(ChronoUnit.YEARS));
-        out.println(ChronoUnit.SECONDS.compareTo(ChronoUnit.DAYS));
-        out.println(ChronoUnit.SECONDS.compareTo(ChronoUnit.MINUTES));
+
+        ChronoUnit chronoUnit1 = ChronoUnit.MICROS;
+        ChronoUnit chronoUnit2 = ChronoUnit.MILLIS;
+        out.printf("Is %s less than %s? %b", chronoUnit1.name(), chronoUnit2.name(),
+                chronoUnit1.compareTo(chronoUnit2) < 0);
     }
 }
