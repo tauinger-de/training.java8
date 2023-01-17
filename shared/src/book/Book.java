@@ -21,6 +21,11 @@ public class Book {
     // -- constructor --
     //
 
+
+    public Book(String isbn, String title, double price) {
+        this(isbn, title, null, price);
+    }
+
     public Book(String isbn, String title, String author, double price) {
         this.isbn = isbn;
         this.title = title;
@@ -51,6 +56,10 @@ public class Book {
 
     public double getPrice() {
         return price;
+    }
+
+    public int getPriceInCent() {
+        return (int) Math.round(this.price * 100);
     }
 
     //
