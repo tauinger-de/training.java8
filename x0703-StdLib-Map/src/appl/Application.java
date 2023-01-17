@@ -62,10 +62,12 @@ public class Application {
         mlog();
         Map<String, Integer> counts = new HashMap<>();
         for (String word : words) {
-            counts.computeIfAbsent(word, k -> 0);
-            counts.computeIfPresent(word, (String k, Integer v) -> v + 1);
+            counts.compute(word, (k, v) -> v == null ? 1 : v + 1);
+//            counts.computeIfAbsent(word, k -> 0);
+//            counts.computeIfPresent(word, (String k, Integer v) -> v + 1);
         }
         out.println(counts);
         out.println();
     }
+
 }
