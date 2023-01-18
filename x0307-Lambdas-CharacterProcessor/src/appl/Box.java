@@ -1,10 +1,11 @@
 package appl;
 
 public class Box<T> {
+
     public T value;
 
-    public Box(T start) {
-        this.value = start;
+    public Box(T initialValue) {
+        this.value = initialValue;
     }
 
     public String toString() {

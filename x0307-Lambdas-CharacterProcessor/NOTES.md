@@ -9,13 +9,14 @@ Der Input wird über einen `Reader` eingelesen.
 
 ## Vorbereitung
 
-1. Verstehen, was ein `Reader` ist
+1. Verstehen, was ein `java.io.Reader` ist
 2. `Handler` Interface anschauen und verstehen
 3. `CharacterProcessor` anschauen, erste Ausbaustufe
 
 ## Vorgehen
 
 1. demo1 - demo5 der Reihe nach anschauen und aus main() aufrufen
+2. `Testers` Bibliotheksklasse erweitern (z.B. Ziffern zählen) und nutzen
 
 ## Übung
 

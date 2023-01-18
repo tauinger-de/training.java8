@@ -5,8 +5,17 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings({"unused", "Convert2MethodRef", "Convert2Lambda", "Anonymous2MethodRef", "CommentedOutCode"})
+@SuppressWarnings({"unused", "Convert2MethodRef", "Convert2Lambda", "CommentedOutCode"})
 public class Application {
+
+    public static void main(String[] args) {
+//        demo0();
+//		demo1();
+//		demo2();
+//		demo3();
+//        demo4();
+        demo5();
+    }
 
     /**
      * nutzt eine anonyme Klasse
@@ -15,7 +24,7 @@ public class Application {
         Reader reader = new StringReader("Hello World");
         CharacterProcessor.process(reader, new Handler<Character>() {
             public void handle(Character ch) {
-                System.out.print(ch);
+                System.out.print(ch + " ");
             }
         });
     }
@@ -29,14 +38,15 @@ public class Application {
     }
 
     /**
-     * ein Handler, der Zeichen in einer Liste speichert
+     * ein Handler, der Zeichen in einer Liste speichert -- WICHTIG, das Lambda nutzt Variablen, die in der
+     * Methode klariert sind!
      */
     static void demo2() {
         Reader reader = new StringReader("Hello World");
-        List<Character> chars = new ArrayList<>();
-        CharacterProcessor.process(reader, (ch) -> chars.add(ch));
-        for (Character ch : chars)
-            System.out.println(ch);
+        List<Character> listOfChars = new ArrayList<>();
+        CharacterProcessor.process(reader, (ch) -> listOfChars.add(ch));
+        System.out.printf("Die Liste hat %d Elemente\n", listOfChars.size());
+        System.out.println(listOfChars);
     }
 
     /**
@@ -44,9 +54,9 @@ public class Application {
      */
     static void demo3Illegal() {
 //		Reader reader = new StringReader("Hello World");
-//		final int foo = 0;
-//		CharacterProcessor.process(reader, (ch) -> foo++);
-//		System.out.println(foo);
+//		int numberOfChars = 0;
+//		CharacterProcessor.process(reader, (ch) -> numberOfChars++); // compile error "Variable used in lambda expression should be final or effectively final"
+//		System.out.println(numberOfChars);
     }
 
     /**
@@ -55,9 +65,9 @@ public class Application {
      */
     static void demo3() {
         Reader reader = new StringReader("Hello World");
-        Box<Integer> n = new Box<>(0);
-        CharacterProcessor.process(reader, (ch) -> n.value++);
-        System.out.println(n);
+        Box<Integer> box = new Box<>(0);
+        CharacterProcessor.process(reader, (ch) -> box.value++);
+        System.out.println(box);
     }
 
     /**
@@ -66,11 +76,13 @@ public class Application {
      */
     static void demo4() {
         Reader reader = new StringReader("Hello World");
-        Box<Integer> n = new Box<>(0);
+        Box<Integer> box = new Box<>(0);
         CharacterProcessor.process(reader, (ch) -> {
-            if (!Character.isWhitespace(ch)) n.value++;
+            if (!Character.isWhitespace(ch)) {
+                box.value++;
+            }
         });
-        System.out.println(n);
+        System.out.println(box);
     }
 
     /**
@@ -79,18 +91,26 @@ public class Application {
      */
     static void demo5() {
         Reader reader = new StringReader("Hello World");
-        Box<Integer> n = new Box<>(0);
-        CharacterProcessor.process(reader, ch -> !Character.isWhitespace(ch), ch -> n.value++);
-        System.out.println(n);
+        Box<Integer> box = new Box<>(0);
+        CharacterProcessor.process(
+                reader,
+                ch -> !Character.isWhitespace(ch),
+                ch -> box.value++
+        );
+        System.out.println(box);
     }
 
-    public static void main(String[] args) {
-        demo0();
-//		demo1();
-//		demo2();
-//		demo3();
-//		demo4();
-//		demo5();
-    }
 
+    /**
+     * Wir können auch eine Bibliothek an Testern definieren.
+     */
+    static class Testers {
+        public static Tester<Character> isWhitespace() {
+            return ch -> Character.isWhitespace(ch);
+        }
+
+        public static Tester<Character> isUppercase() {
+            return ch -> Character.isUpperCase(ch);
+        }
+    }
 }
