@@ -1,6 +1,6 @@
 # Hinweise
 
-Die `onPlus` und die `onMinus` Methode unseres Taschenrechners sehen annähernd gleich aus.
+Die `onPlus` und die `onMinus` Methode unseres Taschenrechners sehen annÃ¤hernd gleich aus.
 
 Wie kann die Redundanz, die hier offensichtlich vorliegt, vermieden werden?
 
