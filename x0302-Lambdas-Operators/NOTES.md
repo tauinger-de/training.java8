@@ -4,8 +4,8 @@ Die `onPlus` und die `onMinus` Methode unseres Taschenrechners sehen annähernd 
 
 Wie kann die Redundanz, die hier offensichtlich vorliegt, vermieden werden?
 
-Vorgehen:
+## Vorgehen
 
-1. Neues Interface `BinaryOperator`
-2. Neue Methode `void onCalc(BinaryOperator op)`
+1. Vorstellung des Interface `BinaryOperator`
+2. Implementierung neuer Methode `void onCalc(BinaryOperator op)`
 3. in `registerListeners()` nun verschachtelte Lambdas
