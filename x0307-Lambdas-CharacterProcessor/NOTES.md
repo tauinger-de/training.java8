@@ -18,7 +18,9 @@ Der Input wird über einen `Reader` eingelesen.
 1. demo1 - demo5 der Reihe nach anschauen und aus main() aufrufen
 2. `Testers` Bibliotheksklasse erweitern (z.B. Ziffern zählen) und nutzen
 
-## Übung
+## Übungen
+
+In einer neuen Methode `demo8` Methode:
 
 1. Implementieren Sie einen Handler, der das Zeichen als Großbuchstabe ausgibt
 2. Implementieren Sie einen Tester, der nur Vokale beachtet
