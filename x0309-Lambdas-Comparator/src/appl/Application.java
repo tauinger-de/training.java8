@@ -1,11 +1,13 @@
 package appl;
 
+import book.Book;
+
 import java.util.Collections;
 import java.util.Comparator;
 
 import static java.util.Comparator.comparing;
 
-@SuppressWarnings("Convert2Lambda")
+@SuppressWarnings({"Convert2Lambda", "unused", "Java8ListSort"})
 public class Application {
 
     /**
