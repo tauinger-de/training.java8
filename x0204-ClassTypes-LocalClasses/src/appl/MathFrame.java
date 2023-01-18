@@ -30,7 +30,6 @@ public class MathFrame extends JFrame {
         class ButtonPlusAdapter implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //Features.print(this.getClass());
                 MathFrame.this.onPlus();
             }
         }

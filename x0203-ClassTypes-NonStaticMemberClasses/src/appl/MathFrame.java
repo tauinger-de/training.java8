@@ -8,14 +8,9 @@ import java.awt.event.ActionListener;
 public class MathFrame extends JFrame {
 
     private class ButtonPlusAdapter implements ActionListener {
-        // MathFrame ???
-        // ButtonPlusAdapter(MathFrame f) {
-        //     this.??? = f;
-        // }
         @Override
         public void actionPerformed(ActionEvent e) {
-            //Features.print(this.getClass());
-            MathFrame.this.onPlus();
+            onPlus();
         }
     }
 
@@ -46,7 +41,7 @@ public class MathFrame extends JFrame {
     }
 
     private void registerListeners() {
-        this.buttonPlus.addActionListener(new ButtonPlusAdapter(/* this */));
+        this.buttonPlus.addActionListener(new ButtonPlusAdapter());
         this.buttonMinus.addActionListener(new ButtonMinusAdapter());
     }
 

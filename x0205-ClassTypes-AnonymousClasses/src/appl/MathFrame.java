@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+@SuppressWarnings("Convert2Lambda")
 public class MathFrame extends JFrame {
 
     private final JTextField textFieldX = new JTextField(10);
@@ -27,21 +28,23 @@ public class MathFrame extends JFrame {
     }
 
     private void registerListeners() {
-        class ButtonPlusAdapter implements ActionListener {
+        // mit "Zwischenvariable"
+        ActionListener plusListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //Features.print(this.getClass());
+                onPlus();
                 MathFrame.this.onPlus();
             }
-        }
-        this.buttonPlus.addActionListener(new ButtonPlusAdapter());
-        class ButtonMinusAdapter implements ActionListener {
+        };
+        this.buttonPlus.addActionListener(plusListener);
+
+        // direkt als Argument
+        this.buttonMinus.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MathFrame.this.onMinus();
+                onMinus();
             }
-        }
-        this.buttonMinus.addActionListener(new ButtonMinusAdapter());
+        });
     }
 
     private void onPlus() {
