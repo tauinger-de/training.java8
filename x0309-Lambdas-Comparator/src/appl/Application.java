@@ -4,11 +4,17 @@ import book.Book;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
-import static java.util.Comparator.comparing;
-
-@SuppressWarnings({"Convert2Lambda", "unused", "Java8ListSort"})
+@SuppressWarnings({"Convert2Lambda", "unused", "Java8ListSort", "ComparatorCombinators", "SameParameterValue"})
 public class Application {
+
+    public static void demo0() {
+        Comparator<Integer> c = (Integer a, Integer b) -> a - b;
+        System.out.println(c.compare(1, 2));    // expected NEG
+        System.out.println(c.compare(2, 1));    // expected POS
+    }
+
 
     /**
      * Sortierung einer Liste mit einer anonymen Klasse als Comparator.
@@ -31,17 +37,29 @@ public class Application {
      */
     static void demo2() {
         // alphabetische Sortierung
-        Book.list.sort((b1, b2) -> -b1.getTitle().compareTo(b2.getTitle()));
+        System.out.println("Alphabetisch:");
+        sortAndPrint(
+                Book.list,
+                (b1, b2) -> b1.getTitle().compareTo(b2.getTitle())
+        );
 
         // Sortierung nach Preis
-        Book.list.sort(comparing(Book::getPrice));
+        System.out.println("\nnach Preis (absteigend):");
+        sortAndPrint(
+                Book.list,
+                (b1, b2) -> b2.getPriceInCent() - b1.getPriceInCent()
+        );
+    }
 
-        // Ausgabe mittels Lambda Methoden-Referenz
-        Book.list.forEach(System.out::println);
+    private static void sortAndPrint(List<Book> bookList, Comparator<Book> comparator) {
+        bookList.sort(comparator);
+        for (Book b : Book.list) {
+            System.out.println(b);
+        }
     }
 
     public static void main(String[] args) {
-        demo1();
-//        demo2();
+//        demo1();
+        demo2();
     }
 }

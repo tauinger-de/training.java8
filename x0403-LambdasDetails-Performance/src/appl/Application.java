@@ -6,6 +6,7 @@ import static java.lang.System.out;
 
 // try JVM-Arg -server!
 
+@SuppressWarnings("Convert2Lambda")
 public class Application {
 
     private static final long TIMES = 2_000_000_000;
@@ -13,7 +14,7 @@ public class Application {
 
     private static long n = 0;
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         out.println("Performace-Test: this will take some time ...");
         PerformanceRunner runner = new PerformanceRunner();
 
