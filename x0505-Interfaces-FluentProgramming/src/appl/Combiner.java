@@ -1,5 +1,6 @@
 package appl;
 
+@SuppressWarnings("unused")
 public class Combiner implements Worker {
 
     private final Worker first;
@@ -11,8 +12,8 @@ public class Combiner implements Worker {
     }
 
     @Override
-    public int work(int value) {
-        int newData = this.first.work(value);
-        return this.second.work(newData);
+    public int workOn(int value) {
+        int newData = this.first.workOn(value);
+        return this.second.workOn(newData);
     }
 }

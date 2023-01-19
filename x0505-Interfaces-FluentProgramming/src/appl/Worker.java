@@ -3,12 +3,12 @@ package appl;
 @FunctionalInterface
 public interface Worker {
 
-    int work(int data);
+    int workOn(int data);
 
     default Worker andThen(Worker followingWorker) {
         return v -> {
-            int newData = work(v);
-            return followingWorker.work(newData);
+            int newData = workOn(v);
+            return followingWorker.workOn(newData);
         };
     }
 
