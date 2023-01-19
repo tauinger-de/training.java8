@@ -17,8 +17,12 @@ public class Application {
         demoGetOrDefault();
         demoPutIfAbsentAndReplace();
         demoCompute();
+        demoMerge();
     }
 
+    /**
+     * Zählt die Number gleicher Wörter -- ohne Nutzung von Java 8 Neuerungen
+     */
     static void demoOldFashion() {
         mlog();
         Map<String, Integer> counts = new HashMap<>();
@@ -35,6 +39,9 @@ public class Application {
         out.println();
     }
 
+    /**
+     * Wie oben nur jetzt mit Java 8
+     */
     static void demoGetOrDefault() {
         mlog();
         Map<String, Integer> counts = new HashMap<>();
@@ -46,6 +53,9 @@ public class Application {
         out.println();
     }
 
+    /**
+     * Alternative Implementierung der Zählung
+     */
     static void demoPutIfAbsentAndReplace() {
         mlog();
         Map<String, Integer> counts = new HashMap<>();
@@ -58,13 +68,26 @@ public class Application {
         out.println();
     }
 
+    /**
+     * Alternative (und eleganteste) Implementierung der Zählung
+     */
     static void demoCompute() {
         mlog();
         Map<String, Integer> counts = new HashMap<>();
         for (String word : words) {
             counts.compute(word, (k, v) -> v == null ? 1 : v + 1);
-//            counts.computeIfAbsent(word, k -> 0);
-//            counts.computeIfPresent(word, (String k, Integer v) -> v + 1);
+        }
+        out.println(counts);
+        out.println();
+    }
+
+
+    @SuppressWarnings("Convert2MethodRef")
+    static void demoMerge() {
+        mlog();
+        Map<String, Integer> counts = new HashMap<>();
+        for (String word : words) {
+            counts.merge(word, 1, (oldCount, increment) -> oldCount + increment);
         }
         out.println(counts);
         out.println();
