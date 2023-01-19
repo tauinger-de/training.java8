@@ -8,13 +8,14 @@ import static java.lang.System.out;
 import static util.Util.mlog;
 import static util.Util.tlog;
 
+@SuppressWarnings("MismatchedReadAndWriteOfArray")
 public class Application {
 
     public static void main(String[] args) {
-		demoParallelSort();
+        demoParallelSort();
         demoParallelSetAll();
         demoParallelPrefix();
-        demoSetAllPerformance(100, 10);
+        demoSetAllPerformance(100, 20);
         demoSetAllPerformance(100_000_000, 10);
         demoSortPerformance(10, 10_000_000);
         demoSortPerformance(10_000_000, 10);
@@ -56,6 +57,7 @@ public class Application {
         mlog();
         final int[] array = new int[10];
         Arrays.setAll(array, index -> index + 1);
+        out.println(Arrays.toString(array));
         Arrays.parallelPrefix(array, (left, right) -> {
             tlog("parallelPrefix: " + left + " " + right);
             return left + right;

@@ -11,6 +11,7 @@ public class CharacterReader implements Supplier<Character> {
         this.reader = reader;
     }
 
+    @Override
     public Character get() {
         try {
             int ch = reader.read();
