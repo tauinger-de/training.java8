@@ -33,7 +33,6 @@ public class MathFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 onPlus();
-                MathFrame.this.onPlus();
             }
         };
         this.buttonPlus.addActionListener(plusListener);

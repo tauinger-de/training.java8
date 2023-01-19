@@ -2,5 +2,10 @@ package appl;
 
 @FunctionalInterface
 public interface Tester<T> {
-    public abstract boolean test(T value);
+
+    /**
+     * Testet, ob wir diesen Wert beachten wollen oder nicht.
+     */
+    boolean test(T value);
+
 }

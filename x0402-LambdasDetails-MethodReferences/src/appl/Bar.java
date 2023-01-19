@@ -1,6 +1,7 @@
 package appl;
 
 public class Bar {
+
     private final int value;
 
     public Bar(int value) {

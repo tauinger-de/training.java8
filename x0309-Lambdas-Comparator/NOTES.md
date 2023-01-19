@@ -1,7 +1,7 @@
 # Hinweise
 
 Ein letztes Beispiel – zu einem bekannten funktionalen Interface der Standard-Bibliothek:
-`Comparator`
+`java.util.Comparator`
 
 Wir wollen eine Liste an `Book` Instanzen auf verschiedene Weisen sortieren und die Liste an Büchern
 ausgeben.

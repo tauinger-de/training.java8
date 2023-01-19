@@ -18,7 +18,6 @@ public class Application {
             public boolean isEqual(Integer v0, Integer v1) {
                 return v0.equals(v1);
             }
-
             public boolean isGreaterThan(Integer v0, Integer v1) {
                 return v0.compareTo(v1) > 0;
             }

@@ -2,7 +2,7 @@ package appl;
 
 import static util.Util.mlog;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "UnnecessaryLocalVariable"})
 public class Application {
 
     public static void main(String[] args) {
@@ -14,9 +14,9 @@ public class Application {
 
     static void demoAssignment() {
         mlog();
-        // Object obj = (x, y)-> x * y;
+        //Object obj = (x, y)-> x * y;
         Foo foo = (x, y) -> x * y;
-        Object obj = foo;
+        Object obj = foo; // "upcast" -- legal, bringt aber nichts
     }
 
     static void demoCast() {
