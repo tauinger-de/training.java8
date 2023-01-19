@@ -4,28 +4,28 @@ import java.io.StringReader;
 
 public class Application {
 
-    static class PrintingProcessor extends Processor {
+    static class PrintingProcessor implements Processor {
         @Override
-        protected void process(char ch) {
+        public void process(char ch) {
             System.out.print(ch + " ");
         }
     }
 
-    static class CountingProcessor extends Processor {
+    static class CountingProcessor implements Processor {
         private int count = 0;
 
         @Override
-        protected void begin() {
+        public void begin() {
             this.count = 0;
         }
 
         @Override
-        protected void process(char ch) {
+        public void process(char ch) {
             this.count++;
         }
 
         @Override
-        protected void end() {
+        public void end() {
             System.out.println(this.count);
         }
     }
@@ -33,12 +33,12 @@ public class Application {
     public static void main(String[] args) {
         String input = "Reliefpfeiler";
 
-        PrintingProcessor p1 = new PrintingProcessor();
-        p1.run(new StringReader(input));
+        ProcessorRunner runner1 = new ProcessorRunner(new PrintingProcessor());
+        runner1.run(new StringReader(input));
 
         System.out.println();
 
-        CountingProcessor p2 = new CountingProcessor();
-        p2.run(new StringReader(input));
+        ProcessorRunner runner2 = new ProcessorRunner(new CountingProcessor());
+        runner2.run(new StringReader(input));
     }
 }

@@ -1,27 +1,12 @@
 package ex2;
 
-import java.io.Reader;
+public interface Processor {
 
-
-public abstract class Processor {
-
-    public final void run(Reader reader) {
-        try (final Reader r = reader) {
-            this.begin();
-            for (int ch = r.read(); ch != -1; ch = r.read()) {
-                this.process((char) ch);
-            }
-            this.end();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    default void begin() {
     }
 
-    protected void begin() {
-    }
+    void process(char ch);
 
-    protected abstract void process(char ch);
-
-    protected void end() {
+    default void end() {
     }
 }
