@@ -8,7 +8,7 @@ public class Application {
     public static void main(String[] args) {
         demoFunction();
         demoSupplierFunctionConsumer();
-        demoSupplierFunctionConsumerIntegerToString();
+        demoSupplierFunctionConsumerPiped();
         demoSupplierFunctionConsumerCToB();
         demoAndThen();
         demoCompose();
@@ -20,6 +20,10 @@ public class Application {
         demoBiFunctionABC();
     }
 
+    /**
+     * Eine einfache parsing-Funktion.
+     */
+    @SuppressWarnings("Convert2MethodRef")
     static void demoFunction() {
         mlog();
         Function<String, Integer> f = v -> Integer.parseInt(v);
@@ -27,22 +31,33 @@ public class Application {
         System.out.println(v);
     }
 
+    /**
+     * Kombination von Supplier, Function und Consumer -- diesmal auch mit Methoden-Referenz im
+     * Lambda
+     */
     static void demoSupplierFunctionConsumer() {
         mlog();
         Supplier<String> supplier = () -> "42";
-        Function<String, Integer> function = v -> Integer.parseInt(v);
-        Consumer<Integer> consumer = v -> System.out.println(v);
+        Function<String, Integer> function = Integer::parseInt;
+        Consumer<Integer> consumer = System.out::println;
         consumer.accept(function.apply(supplier.get()));
     }
 
-    static void demoSupplierFunctionConsumerIntegerToString() {
+    /**
+     * Gleiche wie oben, nur mit Hilfsfunktion `pipe()` zur Ausführung gebracht.
+     */
+    static void demoSupplierFunctionConsumerPiped() {
         mlog();
         Supplier<String> supplier = () -> "42";
-        Function<String, Integer> function = v -> Integer.parseInt(v);
-        Consumer<Integer> consumer = v -> System.out.println(v);
+        Function<String, Integer> function = Integer::parseInt;
+        Consumer<Integer> consumer = System.out::println;
         pipe(supplier, function, consumer);
     }
 
+    /**
+     * Hier wird ein Objekt vom Typ C auf B transformiert und von einem Consumer ausgegeben, der nur
+     * A versteht. Geht auch!
+     */
     static void demoSupplierFunctionConsumerCToB() {
         mlog();
         Supplier<C> supplier = () -> new C(1, 2, 3);
@@ -51,6 +66,9 @@ public class Application {
         pipe(supplier, function, consumer);
     }
 
+    /**
+     * Verkettung von Funktionen über andThen()
+     */
     static void demoAndThen() {
         mlog();
         Function<Integer, Integer> f1 = x -> x + 1;
@@ -60,6 +78,9 @@ public class Application {
         System.out.println(v); // -> 64
     }
 
+    /**
+     * `compose()` verkettet von hinten nach vorne
+     */
     static void demoCompose() {
         mlog();
         Function<Integer, Integer> f1 = x -> x + 1;
@@ -69,6 +90,9 @@ public class Application {
         System.out.println(v); // -> 19
     }
 
+    /**
+     * Schwieriger zu lesen wird es, wenn beides gemischt wird. Warum wird hier 20 ausgegeben?
+     */
     static void demoAndThenCompose() {
         mlog();
         Function<Integer, Integer> f1 = x -> x + 1;
@@ -113,6 +137,11 @@ public class Application {
         System.out.println(c.x + " " + c.y + " " + c.z);
     }
 
+    /**
+     * Hilfsmethode, welche die übergebenen Lambdas ausführt.
+     * <p>
+     * Hier sieht man auch schön das PECS Prinzip: Producer-Extends, Consumer-Super
+     */
     static <S, T> void pipe(
             Supplier<? extends S> s,
             Function<S, T> f,

@@ -24,13 +24,6 @@ public class Application {
         Consumer<String> c = f(77);
         c.accept("Hello");
 
-//		Konsument c1 = v -> System.out.println("c1 = " + v);
-//		Konsument c2 = v -> System.out.println("c2 = " + v);
-//		Konsument c3 = v -> System.out.println("c3 = " + v);
-//		Konsument c4 = c1.andThen(c2).andThen(c3);
-//		c4.accept(77);
-//		
-
 //		demoConsumer();
 //		demoSupplierConsumer();
 //		demoPipe();
@@ -40,11 +33,15 @@ public class Application {
 //		demoPipeBA();
 //		demoPipeBC();
 //		demoAndThen();
-//		demoAndThenCBA();
+        demoAndThenCBA();
 //		demoListForEach();
 //		demoIntConsumer();
+        demoBiConsumer();
     }
 
+    /**
+     * ein Consumer als anonyme Klasse
+     */
     static void demoConsumer1() {
         mlog();
         Consumer<Integer> c = new Consumer<Integer>() {
@@ -55,26 +52,47 @@ public class Application {
         c.accept(42);
     }
 
+    /**
+     * ein Consumer als Lambda
+     */
+    @SuppressWarnings("Convert2MethodRef")
     static void demoConsumer() {
         mlog();
+
+        // lambda "normal"
         Consumer<Integer> c = v -> System.out.println(v);
         c.accept(42);
+
+        // lambda mit Methoden-Referenz -- macht genau das Gleiche wie oben
+        Consumer<Integer> c2 = System.out::println;
+        c2.accept(42);
     }
 
+    /**
+     * Kombiniert einen Supplier mit einem Consumer
+     */
     static void demoSupplierConsumer() {
         mlog();
         Supplier<Integer> supplier = () -> 42;
-        Consumer<Integer> consumer = v -> System.out.println(v);
+        Consumer<Integer> consumer = System.out::println;
         consumer.accept(supplier.get());
     }
 
+    /**
+     * Gleiche Kombination wie oben, allerdings erfolgt die Ausführung über die Hilfsmethode
+     * `pipe()`
+     */
     static void demoPipe() {
         mlog();
         Supplier<Integer> supplier = () -> 42;
-        Consumer<Integer> consumer = v -> System.out.println(v);
+        Consumer<Integer> consumer = System.out::println;
         pipe(supplier, consumer);
     }
 
+    /**
+     * Hier werden Inhalte aus dem Kapitel Kovarianz/Kontravarianz aufgegriffen, konkret, dass ein
+     * Supplier und Consumer vom gleichen generischen Typ "C" miteinander arbeiten können.
+     */
     static void demoPipeCC() {
         mlog();
         Supplier<C> supplier = () -> new C(1, 2, 3);
@@ -82,6 +100,10 @@ public class Application {
         pipe(supplier, consumer);
     }
 
+    /**
+     * Analog oben, aber jetzt ist der Supplier "spezifischer", da er ein C liefert. Und C kann
+     * problemlos auf A up-ge-castet werden.
+     */
     static void demoPipeCA() {
         mlog();
         Supplier<C> supplier = () -> new C(1, 2, 3);
@@ -89,32 +111,16 @@ public class Application {
         pipe(supplier, consumer);
     }
 
+    /**
+     * Analog oben, nun aber problematisch: Der Supplier ist sehr allgemein und liefert "nur" ein A.
+     * Der Consumer möchte aber mindestens ein C haben. Das passt dann nicht zusammen -- `pipe()`
+     * kann nicht ausgeführt werden.
+     */
     static void demoPipeAC() {
         mlog();
         Supplier<A> supplier = () -> new A(1);
         Consumer<C> consumer = a -> System.out.println(a.x);
-        //pipe(supplier, consumer);
-    }
-
-    static void demoPipeCB() {
-        mlog();
-        Supplier<C> supplier = () -> new C(1, 2, 3);
-        Consumer<B> consumer = b -> System.out.println(b.x + b.y);
-        pipe(supplier, consumer);
-    }
-
-    static void demoPipeBA() {
-        mlog();
-        Supplier<B> supplier = () -> new B(1, 2);
-        Consumer<A> consumer = a -> System.out.println(a.x);
-        pipe(supplier, consumer);
-    }
-
-    static void demoPipeBC() {
-        mlog();
-        Supplier<B> supplier = () -> new B(1, 2);
-        Consumer<C> consumer = c -> System.out.println(c.x + c.y + c.z);
-        // pipe(supplier, consumer); // illegal
+//        pipe(supplier, consumer);
     }
 
     static void demoAndThen() {
@@ -138,29 +144,28 @@ public class Application {
 
         Consumer<C> y = x.andThen(c3);
         y.accept(new C(1, 2, 3));
-        System.out.println(c1);
-        System.out.println(c2);
-        System.out.println(c3);
-        System.out.println(x);
-        System.out.println(y);
     }
 
     static void demoListForEach() {
         mlog();
         List<Integer> list = Arrays.asList(10, 20, 30);
-        list.forEach(element -> System.out.println(element));
+        list.forEach(System.out::println);
     }
 
     static void demoIntConsumer() {
         mlog();
-        IntConsumer c = x -> System.out.println(x);
+        IntConsumer c = System.out::println;
         c.accept(42);
     }
 
     static void demoBiConsumer() {
         mlog();
-        BiConsumer<Integer, String> c = (i, s) -> System.out.println(i + " " + s);
-        c.accept(42, "Hello");
+        BiConsumer<Integer, String> biConsumer = (index, name) -> System.out.printf("#%d: %s\n", index, name);
+
+        String[] niceCities = new String[]{"Wien", "Hamburg", "Porto"};
+        for (int n = 0; n < niceCities.length; n++) {
+            biConsumer.accept(n + 1, niceCities[n]);
+        }
     }
 
     static <T> void pipe(Supplier<? extends T> s, Consumer<? super T> c) {
