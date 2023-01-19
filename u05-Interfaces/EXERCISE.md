@@ -52,5 +52,6 @@ Und bringen Sie natürlich die Anwendung wieder zum Laufen...
 **Bonus:**
 
 * Implementieren Sie einen `Processor`, der den Input von hinten nach vorne sammelt. D.h. ein
-  Input von "Java" erzeugt das Wort "avaJ"
-* Was fällt Ihnen beim Input "Reliefpfeiler" auf? :)
+  Input von "Java" erzeugt das Wort "avaJ" Was fällt Ihnen beim Input "Reliefpfeiler" auf? :)
+* Welche der vorhandenen `Processor` Implementierungen auch als Lambda realisiert werden? Refactoren
+  Sie die Anwendung entsprechend. 
