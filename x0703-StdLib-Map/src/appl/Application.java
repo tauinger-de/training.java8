@@ -87,7 +87,11 @@ public class Application {
         mlog();
         Map<String, Integer> counts = new HashMap<>();
         for (String word : words) {
-            counts.merge(word, 1, (oldCount, increment) -> oldCount + increment);
+            counts.merge(
+                    word,   // key
+                    1,      // initiale Wert -- wird gesetzt, wenn keiner in der Map für den Key da
+                    (oldCount, increment) -> oldCount + increment   // remapping fct, wenn Key da
+            );
         }
         out.println(counts);
         out.println();

@@ -9,6 +9,7 @@ import java.util.List;
 import static java.lang.System.out;
 import static util.Util.mlog;
 
+@SuppressWarnings("ComparatorCombinators")
 public class Application {
 
     static final Book book1 = new Book("1111", "Pascal", 10);
@@ -23,6 +24,7 @@ public class Application {
         demoComparatorPrice();
         demoComparingWithPrice();
         demoComparingInt();
+        demoReversed();
         demoThenComparing1();
         demoThenComparing2();
         demoNaturalOrderReversedOrder();
@@ -31,6 +33,9 @@ public class Application {
         demoSortNullsLast();
     }
 
+    /**
+     * Vergleich nach ISBN mit einem Lambda, welches die ISBNs sich holt und diese vergleicht
+     */
     @SuppressWarnings("ComparatorCombinators")
     static void demoCompareToWithIsbn() {
         mlog();
@@ -38,6 +43,9 @@ public class Application {
         out.println(c.compare(book1, book2)); // -> -2
     }
 
+    /**
+     * Vergleich nach ISBN mit einem Key-Extracing Lambda
+     */
     @SuppressWarnings("Convert2MethodRef")
     static void demoComparingWithIsbn() {
         mlog();
@@ -45,16 +53,21 @@ public class Application {
         out.println(c.compare(book1, book2)); // -> -2
     }
 
+    /**
+     * Vergleich nach ISBN mit einem Key-Extracing Lambda -- nun mit Methoden-Ref
+     */
     static void demoComparingWithIsbnMethodReference() {
         mlog();
         Comparator<Book> c = Comparator.comparing(Book::getIsbn);
         out.println(c.compare(book1, book2)); // -> -2
     }
 
+    /**
+     * Vergleich nach Preis -- auskommentiert ist die ausführliche Form
+     */
     static void demoComparatorPrice() {
         mlog();
-        Comparator<Book> c = (b1, b2) ->
-                b1.getPriceInCent() - b2.getPriceInCent();
+        Comparator<Book> c = (b1, b2) -> b1.getPriceInCent() - b2.getPriceInCent();
 //			if (b1.getPrice() > b2.getPrice())
 //				return 1;
 //			if (b1.getPrice() < b2.getPrice())
@@ -63,12 +76,18 @@ public class Application {
         out.println(c.compare(book1, book2)); // -> -1
     }
 
+    /**
+     * Vergleich nach Preis -- wieder mit Key-Extractor
+     */
     static void demoComparingWithPrice() {
         mlog();
         Comparator<Book> c = Comparator.comparing(Book::getPrice);
         out.println(c.compare(book1, book2)); // -> -1
     }
 
+    /**
+     * Vergleich nach Preis -- diesmal aber auf int Basis (`price` ist double)
+     */
     static void demoComparingInt() {
         mlog();
         Comparator<Book> c = Comparator.comparingInt(Book::getPriceInCent);

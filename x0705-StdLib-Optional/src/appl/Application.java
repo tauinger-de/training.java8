@@ -5,10 +5,10 @@ import java.util.Optional;
 
 import static util.Util.mlog;
 
+@SuppressWarnings({"DataFlowIssue", "ConstantValue", "ResultOfMethodCallIgnored"})
 public class Application {
 
     public static void main(String[] args) {
-
         demoEmpty();
         demoOf1();
         demoOf2();
@@ -31,8 +31,7 @@ public class Application {
 
         demoMap1();
         demoMap2();
-        demoFlatMap1();
-        demoFlatMap2();
+        demoFlatMap();
         demoFilter1();
         demoFilter2();
     }
@@ -90,31 +89,33 @@ public class Application {
     static void demoIsPresent1() {
         mlog();
         Optional<Integer> o = Optional.of(42);
-        if (o.isPresent())
+        if (o.isPresent()) {
             System.out.println(o.get());
-        else
+        } else {
             System.out.println("not present");
+        }
     }
 
     static void demoIsPresent2() {
         mlog();
         Optional<Integer> o = Optional.empty();
-        if (o.isPresent())
+        if (o.isPresent()) {
             System.out.println(o.get());
-        else
+        } else {
             System.out.println("not present");
+        }
     }
 
     static void demoIfPresent1() {
         mlog();
         Optional<Integer> o = Optional.of(42);
-        o.ifPresent(v -> System.out.println(v));
+        o.ifPresent(v -> System.out.println("Optional is holding value: " + v));
     }
 
     static void demoIfPresent2() {
         mlog();
         Optional<Integer> o = Optional.empty();
-        o.ifPresent(v -> System.out.println(v));
+        o.ifPresent(v -> System.out.println("Optional is holding value: " + v));
     }
 
     static void demoOrElse1() {
@@ -181,17 +182,15 @@ public class Application {
         System.out.println(o2);
     }
 
-    static void demoFlatMap1() {
+    /**
+     * flatMap hilft uns mit Ergebnissen von Drittmethoden umzugehen, die bereits ein Optional
+     * liefern. Würden wir map() nutzen, so erhalten wir ein Optional<Optional<Integer>>
+     */
+    static void demoFlatMap() {
         mlog();
-        Optional<Integer> o1 = Optional.of(42);
-        Optional<Integer> o2 = o1.flatMap(x -> x > 0 ? Optional.of(x) : Optional.empty());
-        System.out.println(o2);
-    }
-
-    static void demoFlatMap2() {
-        mlog();
-        Optional<Integer> o1 = Optional.of(-42);
-        Optional<Integer> o2 = o1.flatMap(x -> x > 0 ? Optional.of(x) : Optional.empty());
+        Optional<Integer> o1 = Optional.of(81).flatMap(Application::calculateSquareRoot);
+        System.out.println(o1);
+        Optional<Integer> o2 = Optional.of(-1).flatMap(Application::calculateSquareRoot);
         System.out.println(o2);
     }
 
@@ -207,5 +206,10 @@ public class Application {
         Optional<Integer> o1 = Optional.of(77);
         Optional<Integer> o2 = o1.filter(x -> x % 2 == 0);
         System.out.println(o2);
+    }
+
+
+    private static Optional<Integer> calculateSquareRoot(int n) {
+        return (n >= 0) ? Optional.of((int) Math.sqrt(n)) : Optional.empty();
     }
 }

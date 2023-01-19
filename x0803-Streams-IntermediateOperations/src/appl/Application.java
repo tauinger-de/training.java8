@@ -7,52 +7,55 @@ import java.util.stream.Stream;
 
 import static util.Util.mlog;
 
-@SuppressWarnings("unused")
 public class Application {
 
     public static void main(String[] args) {
-//		demoMap();
-//		demoMapToInt();
-//		demoMapToDouble();
-//		demoFlatMap();
-//		demoFlatMapToInt();
-//		demoFilter();
-//		demoPeek();
-//		demoDistinct();
-//		demoSorted();
-//		demoSkip();
-//		demoLimit();
-//		demoCombination1();		
+        demoMap();
+        demoMapToInt();
+        demoMapToDouble();
+        demoFlatMap();
+        demoFlatMapToInt();
+        demoFilter();
+        demoPeek();
+        demoDistinct();
+        demoSorted();
+        demoSkip();
+        demoLimit();
+        demoCombination1();
         demoCombination2();
-//		demoCombination3();
     }
 
+    @SuppressWarnings("SimplifyStreamApiCallChains")
     static void demoMap() {
         mlog();
         Arrays.asList("red", "green", "blue")
                 .stream()
-                .map(s -> s.length())
+                .map(String::length)
                 .forEach(x -> System.out.print(x + " "));
         System.out.println();
     }
 
     static void demoMapToInt() {
         mlog();
-        Arrays.asList("red", "green", "blue")
-                .stream().mapToInt(s -> s.length())
+        Stream.of("red", "green", "blue")
+                .mapToInt(String::length)
                 .forEach(x -> System.out.print(x + " "));
         System.out.println();
     }
 
     static void demoMapToDouble() {
         mlog();
-        Arrays.asList("red", "green", "blue")
-                .stream()
+        Stream.of("red", "green", "blue")
                 .mapToDouble(s -> s.length() * 0.5)
                 .forEach(x -> System.out.print(x + " "));
         System.out.println();
     }
 
+    /**
+     * Hier streamen wir eine Liste von Listen. FlatMap kann die Elemente dieser Listen auf einen
+     * Stream reduzieren
+     */
+    @SuppressWarnings("Convert2MethodRef")
     static void demoFlatMap() {
         mlog();
         final List<String> list1 = Arrays.asList("red", "green", "blue");
@@ -78,43 +81,53 @@ public class Application {
 
     static void demoFilter() {
         mlog();
-        Stream<String> stream = Arrays.asList("red", "green", "blue").stream();
-        stream.filter(s -> s.length() > 3).forEach(s -> System.out.print(s + " "));
+        Stream.of("red", "green", "blue")
+                .filter(s -> s.length() > 3)
+                .forEach(s -> System.out.print(s + " "));
         System.out.println();
     }
 
+    /**
+     * Peek erlaubt die Vorschaltung eines Consumers je Element (dies ist keine terminale Operation
+     * im Gegensatz zu foreach)
+     */
     static void demoPeek() {
         mlog();
-        Stream<String> stream = Arrays.asList("red", "green", "blue").stream();
-        stream.peek(s -> System.out.print(s.length() + ":")).forEach(s -> System.out.print(s + " "));
+        Stream.of("red", "green", "blue")
+                .peek(s -> System.out.print(s.length() + ":"))
+                .forEach(s -> System.out.print(s + " "));
         System.out.println();
     }
 
     static void demoDistinct() {
         mlog();
-        Stream<String> stream = Arrays.asList("red", "green", "red", "blue", "green").stream();
-        stream.distinct().forEach(s -> System.out.print(s + " "));
+        Stream.of("red", "green", "red", "blue", "green")
+                .distinct()
+                .forEach(s -> System.out.print(s + " "));
         System.out.println();
     }
 
     static void demoSorted() {
         mlog();
-        Stream<String> stream = Arrays.asList("red", "green", "blue").stream();
-        stream.sorted().forEach(s -> System.out.print(s + " "));
+        Stream.of("red", "green", "blue")
+                .sorted()
+                .forEach(s -> System.out.print(s + " "));
         System.out.println();
     }
 
     static void demoSkip() {
         mlog();
-        Stream<Integer> stream = Arrays.asList(10, 20, 30, 40).stream();
-        stream.skip(2).forEach(s -> System.out.print(s + " "));
+        Stream.of(10, 20, 30, 40)
+                .skip(2)
+                .forEach(s -> System.out.print(s + " "));
         System.out.println();
     }
 
     static void demoLimit() {
         mlog();
-        Stream<Integer> stream = Arrays.asList(10, 20, 30, 40).stream();
-        stream.limit(3).forEach(s -> System.out.print(s + " "));
+        Stream.of(10, 20, 30, 40)
+                .limit(3)
+                .forEach(s -> System.out.print(s + " "));
         System.out.println();
     }
 
@@ -146,19 +159,6 @@ public class Application {
         } catch (Exception e) {
             System.out.println("Expected: " + e.getMessage());
         }
-    }
-
-    static void demoCombination3() {
-        mlog();
-        Stream<Integer> stream = Stream.of(33, 55, 44, 11, 22, 66);
-        stream = stream
-                .skip(1)
-                .limit(4);
-        stream
-                .filter(x -> x % 2 == 0)
-                .sorted()
-                .forEach(s -> System.out.print(s + " "));
-        System.out.println();
     }
     //@formatter:on
 }

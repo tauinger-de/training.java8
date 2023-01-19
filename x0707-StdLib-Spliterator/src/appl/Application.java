@@ -22,7 +22,7 @@ public class Application {
     static void demoTryAdvance() {
         mlog();
         final Integer[] array = new Integer[]{10, 20, 30, 40, 50, 60};
-        final Spliterator<Integer> s = Spliterators.spliterator(array, 0);
+        final Spliterator<Integer> s = Spliterators.spliterator(array, Spliterator.ORDERED);
         while (s.tryAdvance((Integer v) -> out.print(v + " "))) {
         }
         out.println();
