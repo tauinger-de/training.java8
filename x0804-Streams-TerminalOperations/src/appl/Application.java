@@ -19,8 +19,8 @@ public class Application {
 
     public static void main(String[] args) {
         demoForEachSequential();
-        demoForEachParallel();
-        demoForEachOrdered();
+        demoForEachOnParallelStream();
+        demoForEachOrderedOnParallelStream();
 
         demoToObjectArray();
         demoToIntegerArray();
@@ -49,17 +49,19 @@ public class Application {
         System.out.println();
     }
 
-    static void demoForEachParallel() {
+    static void demoForEachOnParallelStream() {
         mlog();
-        Stream<Integer> stream = Stream.of(10, 20, 30, 40, 50).parallel();
-        stream.forEach(s -> tlog("forEach: " + s));
+        Stream.of(10, 20, 30, 40, 50)
+                .parallel()
+                .forEach(s -> tlog("forEach: " + s));
         System.out.println();
     }
 
-    static void demoForEachOrdered() {
+    static void demoForEachOrderedOnParallelStream() {
         mlog();
-        Stream<Integer> stream = Stream.of(10, 20, 30, 40, 50).parallel();
-        stream.forEachOrdered(s -> tlog("forEach: " + s));
+        Stream.of(10, 20, 30, 40, 50)
+                .parallel()
+                .forEachOrdered(s -> tlog("forEach: " + s));
         System.out.println();
     }
 

@@ -62,8 +62,9 @@ public class Application {
         final List<String> list2 = Arrays.asList("rot", "grün", "blau");
         final List<List<String>> list = Arrays.asList(list1, list2);
 
-        Stream<String> stream = list.stream().flatMap((List<String> l) -> l.stream());
-        stream.forEach(s -> System.out.print(s + " "));
+        list.stream()
+                .flatMap((List<String> l) -> l.stream())
+                .forEach(s -> System.out.print(s + " "));
         System.out.println();
     }
 
