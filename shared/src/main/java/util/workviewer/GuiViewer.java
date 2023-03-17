@@ -1,14 +1,11 @@
 package util.workviewer;
 
-import util.workviewer.Model.Band;
-import util.workviewer.Work.Viewer;
-
 import javax.swing.*;
 import java.awt.*;
 
 import static util.Util.XRunnable.xrun;
 
-public class GuiViewer extends JFrame implements Viewer {
+public class GuiViewer extends JFrame implements Work.Viewer {
 
     private final int sleepTime = 50;
     private final int linesPerSecond = 40;
@@ -17,7 +14,7 @@ public class GuiViewer extends JFrame implements Viewer {
 
     private volatile boolean isRunning = false;
     private volatile long startTime;
-    private volatile Model model;
+    private volatile util.workviewer.Model model;
 
     @Override
     public void beginWork(String text, Color color) {
@@ -133,7 +130,7 @@ public class GuiViewer extends JFrame implements Viewer {
         this.model = new Model();
         this.model.addModelListener(new Model.Listener() {
             @Override
-            public void bandAdded(Band band) {
+            public void bandAdded(Model.Band band) {
                 SwingUtilities.invokeLater(() -> {
                     final BandPanel bandPanel = new BandPanel(band);
                     bandPanel.doLayout();
@@ -144,12 +141,12 @@ public class GuiViewer extends JFrame implements Viewer {
             }
 
             @Override
-            public void workBegin(Band band) {
+            public void workBegin(Model.Band band) {
                 SwingUtilities.invokeLater(() -> GuiViewer.this.centerPanel.getComponent(band.getIndex()).repaint());
             }
 
             @Override
-            public void workEnd(Band band) {
+            public void workEnd(Model.Band band) {
                 SwingUtilities.invokeLater(() -> GuiViewer.this.centerPanel.getComponent(band.getIndex()).repaint());
             }
         });
